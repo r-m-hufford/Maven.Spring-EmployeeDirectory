@@ -11,11 +11,24 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private Long deptNum;
     private String deptName;
     private String manager;
 
     public Department() {}
+
+    public Department(Long id, Long deptNum, String deptName, String manager) {
+        this.id = id;
+        this.deptNum = deptNum;
+        this.deptName = deptName;
+        this.manager = manager;
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public Long getDeptNum() {
         return deptNum;

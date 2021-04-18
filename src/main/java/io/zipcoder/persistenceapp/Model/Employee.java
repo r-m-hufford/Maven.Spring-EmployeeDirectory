@@ -11,6 +11,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private Long employeeNumber;
     private String firstName;
     private String lastName;
@@ -24,7 +25,9 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName, String title, String phoneNumber, String email, String hireDate, String manager, String department) {
+    public Employee(Long id,Long employeeNumber, String firstName, String lastName, String title, String phoneNumber, String email, String hireDate, String manager, String department) {
+        this.id = id;
+        this.employeeNumber = employeeNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.title = title;
@@ -33,6 +36,10 @@ public class Employee {
         this.hireDate = hireDate;
         this.manager = manager;
         this.department = department;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Long getEmployeeNumber() {
