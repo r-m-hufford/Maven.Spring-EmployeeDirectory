@@ -47,29 +47,12 @@ public class EmployeeService {
         return repository.save(employee);
     }
 
-    public List<Employee> findHierarchy(Long id) {
-        List<Employee> hierarchy = new ArrayList<>();
-
-        Employee employee;
-        Long currentId = 0L;
-
-        while (currentId != null) {
-            currentId = 0L;
-            employee = repository.findOne(id);
-            currentId = employee.getId();
-            hierarchy.add(employee);
-        }
-
-
-        return null;
-    }
-
     public void delete(Long id) {
         repository.delete(repository.findOne(id));
     }
 
-    public Employee updateManager(Employee e, Long id) {
-        Employee employee = readOne(id);
+    public Employee updateManager(Employee e, Long eid, Long mid) {
+        Employee employee = readOne(eid);
         employee.setManagerId(e.getManagerId());
         return repository.save(employee);
     }
@@ -102,5 +85,19 @@ public class EmployeeService {
             }
         }
         return findByDeptId;
+    }
+
+    public List<Long> findHierarchy(Long id) {
+        List<Long> hierarchy = new ArrayList<>();
+
+        Employee employee;
+        Long currentId = id;
+
+        while (currentId != null) {
+            employee = repository.findOne(currentId);
+            currentId = employee.getId();
+            hierarchy.add(employee.getManagerId());
+        }
+        return hierarchy;
     }
 }

@@ -45,9 +45,9 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
-    @PutMapping("/employee/update_manager{id}")
-    ResponseEntity<Employee> updateManger(@RequestBody Employee e, @PathVariable Long id) {
-        Employee employee = service.updateManager(e, id);
+    @PutMapping("/employee/update_manager/{eid}/{mid}")
+    ResponseEntity<Employee> updateManger(@RequestBody Employee e, @PathVariable Long eid, @PathVariable Long mid) {
+        Employee employee = service.updateManager(e, eid, mid);
         return ResponseEntity.ok(employee);
     }
 
@@ -56,7 +56,7 @@ public class EmployeeController {
         return ResponseEntity.ok(service.findByManager(id));
     }
 
-    @GetMapping("/employee/findNoManager/{id}")
+    @GetMapping("/employee/findNoManager")
     ResponseEntity<List<Employee>> employeesWithNoManager() {
         return ResponseEntity.ok(service.findWithNoManager());
     }
@@ -72,9 +72,8 @@ public class EmployeeController {
         return ResponseEntity.ok("Employee " + id + " has been removed.");
     }
 
-    @GetMapping("/employee/findHierarchy")
-    ResponseEntity<List<Employee>> findHierarchy(@PathVariable Long id) {
-        List<Employee> hierarchy = new ArrayList<>();
-        return ResponseEntity.ok(hierarchy);
+    @GetMapping("/employee/findHierarchy/{id}")
+    ResponseEntity<List<Long>> findHierarchy(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findHierarchy(id));
     }
 }
