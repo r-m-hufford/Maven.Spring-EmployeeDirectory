@@ -1,9 +1,8 @@
 package io.zipcoder.persistenceapp.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -19,13 +18,13 @@ public class Employee {
     private String phoneNumber;
     private String email;
     private String hireDate;
-    private String manager;
-    private String department;
+    private Long managerId;
+    private Long deptNum;
 
     public Employee() {
     }
 
-    public Employee(Long id,Long employeeNumber, String firstName, String lastName, String title, String phoneNumber, String email, String hireDate, String manager, String department) {
+    public Employee(Long id,Long employeeNumber, String firstName, String lastName, String title, String phoneNumber, String email, String hireDate, Long managerId, Long deptNum) {
         this.id = id;
         this.employeeNumber = employeeNumber;
         this.firstName = firstName;
@@ -34,8 +33,8 @@ public class Employee {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.hireDate = hireDate;
-        this.manager = manager;
-        this.department = department;
+        this.managerId = managerId;
+        this.deptNum = deptNum;
     }
 
     public Long getId() {
@@ -70,12 +69,12 @@ public class Employee {
         return hireDate;
     }
 
-    public String getManager() {
-        return manager;
+    public Long getManagerId() {
+        return managerId;
     }
 
-    public String getDepartment() {
-        return department;
+    public Long getDeptNum() {
+        return deptNum;
     }
 
     public void setEmployeeNumber(Long employeeNumber) {
@@ -106,12 +105,12 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    public void setManager(String manager) {
-        this.manager = manager;
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setDeptNum(Long deptNum) {
+        this.deptNum = deptNum;
     }
 
     @Override
@@ -119,12 +118,12 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(employeeNumber, employee.employeeNumber) && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(title, employee.title) && Objects.equals(phoneNumber, employee.phoneNumber) && Objects.equals(email, employee.email) && Objects.equals(hireDate, employee.hireDate) && Objects.equals(manager, employee.manager) && Objects.equals(department, employee.department);
+        return Objects.equals(employeeNumber, employee.employeeNumber) && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(title, employee.title) && Objects.equals(phoneNumber, employee.phoneNumber) && Objects.equals(email, employee.email) && Objects.equals(hireDate, employee.hireDate) && Objects.equals(managerId, employee.managerId) && Objects.equals(deptNum, employee.deptNum);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeNumber, firstName, lastName, title, phoneNumber, email, hireDate, manager, department);
+        return Objects.hash(employeeNumber, firstName, lastName, title, phoneNumber, email, hireDate, managerId, deptNum);
     }
 
     @Override
@@ -137,8 +136,8 @@ public class Employee {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", hireDate='" + hireDate + '\'' +
-                ", manager='" + manager + '\'' +
-                ", department='" + department + '\'' +
+                ", manager='" + managerId + '\'' +
+                ", department='" + deptNum + '\'' +
                 '}';
     }
 }

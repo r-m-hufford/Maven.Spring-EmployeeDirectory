@@ -34,13 +34,13 @@ public class EmployeeService {
         Employee employee = readOne(id);
         employee.setEmployeeNumber(e.getEmployeeNumber());
         employee.setEmail(e.getEmail());
-        employee.setDepartment(e.getDepartment());
+        employee.setDeptNum(e.getDeptNum());
         employee.setFirstName(e.getFirstName());
         employee.setLastName(e.getLastName());
         employee.setTitle(e.getTitle());
         employee.setPhoneNumber(e.getPhoneNumber());
         employee.setHireDate(e.getHireDate());
-        employee.setManager(e.getManager());
+        employee.setManagerId(e.getManagerId());
 
         return employee;
     }

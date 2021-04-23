@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/API")
 public class EmployeeController {
 
     private EmployeeService service;
@@ -17,8 +18,6 @@ public class EmployeeController {
     public EmployeeController(EmployeeService service) {
         this.service = service;
     }
-
-    //create, read all, read one, update, delete;
 
     @PostMapping("/employee")
     ResponseEntity<Employee> createEmployee(@RequestBody Employee e) {

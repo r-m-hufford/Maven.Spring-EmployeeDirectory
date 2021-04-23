@@ -12,7 +12,6 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private Long deptNum;
     private String deptName;
     private String manager;
@@ -26,9 +25,7 @@ public class Department {
         this.manager = manager;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
     public Long getDeptNum() {
         return deptNum;

@@ -31,7 +31,7 @@ public class DepartmentService {
     }
 
     public Department updateDepartment(Department d, Long id) {
-        Department department = readOne(id);// <- Reuse code whenever possible!!
+        Department department = readOne(id);
         department.setDeptName(d.getDeptName());
         department.setManager(d.getManager());
 
