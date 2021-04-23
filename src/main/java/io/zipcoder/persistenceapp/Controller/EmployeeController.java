@@ -2,6 +2,7 @@ package io.zipcoder.persistenceapp.Controller;
 
 import io.zipcoder.persistenceapp.Model.Employee;
 import io.zipcoder.persistenceapp.Service.EmployeeService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -75,6 +76,20 @@ public class EmployeeController {
             }
         }
         return ResponseEntity.ok(findByDeptId);
+    }
+
+    @DeleteMapping("/employee/{id}")
+    ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.ok("Employee " + id + " has been deleted.");
+    }
+
+    @GetMapping("?employee/findHierarchy")
+    ResponseEntity<List<Employee>> findHierarchy(@PathVariable Long id) {
+        List<Employee> hierarchy = new ArrayList<>();
+        Employee employee = findByDeptId(id);
+
+        return ResponseEntity.ok(hierarchy);
     }
 
 

@@ -44,4 +44,8 @@ public class EmployeeService {
 
         return repository.save(employee);
     }
+
+    public void delete(Long id) {
+        repository.delete(repository.findOne(id));
+    }
 }

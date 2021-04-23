@@ -39,7 +39,7 @@ public class DepartmentService {
     }
 
     public void deleteDepartment(Long id) {
-        repository.delete(id);
+        repository.delete(repository.findOne(id));
     }
 
 }
