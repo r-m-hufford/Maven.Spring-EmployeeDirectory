@@ -42,6 +42,6 @@ public class EmployeeService {
         employee.setHireDate(e.getHireDate());
         employee.setManagerId(e.getManagerId());
 
-        return employee;
+        return repository.save(employee);
     }
 }

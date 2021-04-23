@@ -35,10 +35,11 @@ public class DepartmentService {
         department.setDeptName(d.getDeptName());
         department.setManager(d.getManager());
 
-        return department;
+        return repository.save(department);
     }
 
     public void deleteDepartment(Long id) {
         repository.delete(id);
     }
+
 }

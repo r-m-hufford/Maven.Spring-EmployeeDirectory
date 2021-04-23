@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,4 +43,39 @@ public class EmployeeController {
         Employee employee = service.update(e, id);
         return ResponseEntity.ok(employee);
     }
+
+    @GetMapping("/employee/findByManager/{id}")
+    ResponseEntity<List<Employee>> employeesByManager(@PathVariable Long id) {
+        List<Employee> findByManager = new ArrayList<>();
+        for (Employee employee : service.readAll()) {
+            if (employee.getManagerId() == id) {
+                findByManager.add(employee);
+            }
+        }
+        return ResponseEntity.ok(findByManager);
+    }
+
+    @GetMapping("/employee/findNoManager/{id}")
+    ResponseEntity<List<Employee>> employeesWithNoManager() {
+        List<Employee> findNoManager = new ArrayList<>();
+        for (Employee employee : service.readAll()) {
+            if (employee.getManagerId() == null) {
+                findNoManager.add(employee);
+            }
+        }
+        return ResponseEntity.ok(findNoManager);
+    }
+
+    @GetMapping("/employee/findByDeptId/{id}")
+    ResponseEntity<List<Employee>> findByDeptId(@PathVariable Long id) {
+        List<Employee> findByDeptId = new ArrayList<>();
+        for (Employee employee : service.readAll()) {
+            if (employee.getDeptNum() == id) {
+                findByDeptId.add(employee);
+            }
+        }
+        return ResponseEntity.ok(findByDeptId);
+    }
+
+
 }
