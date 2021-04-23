@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Department {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long deptNum;
     private String deptName;

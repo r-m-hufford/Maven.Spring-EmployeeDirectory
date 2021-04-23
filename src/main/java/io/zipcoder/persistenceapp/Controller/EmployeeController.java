@@ -4,6 +4,7 @@ import io.zipcoder.persistenceapp.Model.Employee;
 import io.zipcoder.persistenceapp.Service.EmployeeService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +30,7 @@ public class EmployeeController {
 
     @GetMapping("/employee")
     ResponseEntity<List<Employee>> readAll() {
-        List<Employee> employees = service.readAll();
-        return ResponseEntity.ok(employees);
+        return new ResponseEntity<>(service.readAll(), HttpStatus.OK);
     }
 
     @GetMapping("/employee/{id}")
@@ -45,52 +45,36 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
+    @PutMapping("/employee/update_manager{id}")
+    ResponseEntity<Employee> updateManger(@RequestBody Employee e, @PathVariable Long id) {
+        Employee employee = service.updateManager(e, id);
+        return ResponseEntity.ok(employee);
+    }
+
     @GetMapping("/employee/findByManager/{id}")
     ResponseEntity<List<Employee>> employeesByManager(@PathVariable Long id) {
-        List<Employee> findByManager = new ArrayList<>();
-        for (Employee employee : service.readAll()) {
-            if (employee.getManagerId() == id) {
-                findByManager.add(employee);
-            }
-        }
-        return ResponseEntity.ok(findByManager);
+        return ResponseEntity.ok(service.findByManager(id));
     }
 
     @GetMapping("/employee/findNoManager/{id}")
     ResponseEntity<List<Employee>> employeesWithNoManager() {
-        List<Employee> findNoManager = new ArrayList<>();
-        for (Employee employee : service.readAll()) {
-            if (employee.getManagerId() == null) {
-                findNoManager.add(employee);
-            }
-        }
-        return ResponseEntity.ok(findNoManager);
+        return ResponseEntity.ok(service.findWithNoManager());
     }
 
     @GetMapping("/employee/findByDeptId/{id}")
     ResponseEntity<List<Employee>> findByDeptId(@PathVariable Long id) {
-        List<Employee> findByDeptId = new ArrayList<>();
-        for (Employee employee : service.readAll()) {
-            if (employee.getDeptNum() == id) {
-                findByDeptId.add(employee);
-            }
-        }
-        return ResponseEntity.ok(findByDeptId);
+        return ResponseEntity.ok(service.findByDeptId(id));
     }
 
     @DeleteMapping("/employee/{id}")
     ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.ok("Employee " + id + " has been deleted.");
+        return ResponseEntity.ok("Employee " + id + " has been removed.");
     }
 
-    @GetMapping("?employee/findHierarchy")
+    @GetMapping("/employee/findHierarchy")
     ResponseEntity<List<Employee>> findHierarchy(@PathVariable Long id) {
         List<Employee> hierarchy = new ArrayList<>();
-        Employee employee = findByDeptId(id);
-
         return ResponseEntity.ok(hierarchy);
     }
-
-
 }

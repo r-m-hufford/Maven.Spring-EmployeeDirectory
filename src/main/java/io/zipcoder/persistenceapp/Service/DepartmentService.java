@@ -42,4 +42,15 @@ public class DepartmentService {
         repository.delete(repository.findOne(id));
     }
 
+    public Department updateManager(Department d, Long id) {
+        Department department = readOne(id);
+        department.setManager(d.getManager());
+        return repository.save(department);
+    }
+
+    public Department updateDeptName(Department d, Long id) {
+         Department department = readOne(id);
+         department.setDeptName(d.getDeptName());
+         return repository.save(department);
+    }
 }

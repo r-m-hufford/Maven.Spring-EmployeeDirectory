@@ -5,6 +5,7 @@ import io.zipcoder.persistenceapp.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,7 +24,9 @@ public class EmployeeService {
     }
 
     public List<Employee> readAll() {
-        return repository.findAll();
+        List<Employee> employeeList = new ArrayList<>();
+        repository.findAll().forEach(employeeList::add);
+        return employeeList;
     }
 
     public Employee readOne(Long id) {
@@ -32,7 +35,6 @@ public class EmployeeService {
 
     public Employee update(Employee e, Long id) {
         Employee employee = readOne(id);
-        employee.setEmployeeNumber(e.getEmployeeNumber());
         employee.setEmail(e.getEmail());
         employee.setDeptNum(e.getDeptNum());
         employee.setFirstName(e.getFirstName());
@@ -45,7 +47,60 @@ public class EmployeeService {
         return repository.save(employee);
     }
 
+    public List<Employee> findHierarchy(Long id) {
+        List<Employee> hierarchy = new ArrayList<>();
+
+        Employee employee;
+        Long currentId = 0L;
+
+        while (currentId != null) {
+            currentId = 0L;
+            employee = repository.findOne(id);
+            currentId = employee.getId();
+            hierarchy.add(employee);
+        }
+
+
+        return null;
+    }
+
     public void delete(Long id) {
         repository.delete(repository.findOne(id));
+    }
+
+    public Employee updateManager(Employee e, Long id) {
+        Employee employee = readOne(id);
+        employee.setManagerId(e.getManagerId());
+        return repository.save(employee);
+    }
+
+    public List<Employee> findByManager(Long id) {
+        List<Employee> findByManager = new ArrayList<>();
+        for (Employee employee : repository.findAll()) {
+            if (employee.getManagerId() == id) {
+                findByManager.add(employee);
+            }
+        }
+        return findByManager;
+    }
+
+    public List<Employee> findWithNoManager() {
+        List<Employee> findNoManager = new ArrayList<>();
+        for (Employee employee : repository.findAll()) {
+            if (employee.getManagerId() == null) {
+                findNoManager.add(employee);
+            }
+        }
+        return findNoManager;
+    }
+
+    public List<Employee> findByDeptId(Long id) {
+        List<Employee> findByDeptId = new ArrayList<>();
+        for (Employee employee : repository.findAll()) {
+            if (employee.getDeptNum() == id) {
+                findByDeptId.add(employee);
+            }
+        }
+        return findByDeptId;
     }
 }
