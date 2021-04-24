@@ -4,6 +4,7 @@ import io.zipcoder.persistenceapp.Model.Employee;
 import io.zipcoder.persistenceapp.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +52,9 @@ public class EmployeeService {
         repository.delete(repository.findOne(id));
     }
 
-    public Employee updateManager(Employee e, Long eid, Long mid) {
-        Employee employee = readOne(eid);
-        employee.setManagerId(e.getManagerId());
+    public Employee updateManager(Employee e, Long id) {
+        Employee employee = readOne(id);
+        employee.setManagerId(e.getId());
         return repository.save(employee);
     }
 
@@ -87,17 +88,44 @@ public class EmployeeService {
         return findByDeptId;
     }
 
-    public List<Long> findHierarchy(Long id) {
-        List<Long> hierarchy = new ArrayList<>();
+    //   everyone/thing upstream
+    public List<Employee> findHierarchy(Long id) {
+        List<Employee> hierarchy = new ArrayList<>();
 
-        Employee employee;
-        Long currentId = id;
+        Employee currentEmployee = repository.findOne(id);
 
-        while (currentId != null) {
-            employee = repository.findOne(currentId);
-            currentId = employee.getId();
-            hierarchy.add(employee.getManagerId());
+        while (currentEmployee.getManagerId() != null) {
+            hierarchy.add(repository.findOne(currentEmployee.getManagerId()));
+            currentEmployee = repository.findOne(currentEmployee.getManagerId());
         }
         return hierarchy;
     }
+
+    //   everyone/thing downstream
+    /*public List<Employee> findDownstream(@PathVariable Long id) {
+        List<Employee> downStream = new ArrayList<>();
+        Employee manager = repository.findOne(id);
+
+        for (Employee employee : repository.findAll()) {
+            if(employee.getManagerId() == manager.getId()) {
+                downStream.add(employee);
+            }
+        }
+        // int start = 0
+        // start = downstream.size - inside first loop
+        // i = start
+        //
+        for (int i = 0; i < downStream.size();i++) {
+            for (Employee employee : repository.findAll()) {
+                if (employee.getManagerId() == downStream.get(i).getId()) {
+                    downStream.add(employee);
+                }
+            }
+        }
+        return downStream;
+    }*/
+
+
+
+
 }

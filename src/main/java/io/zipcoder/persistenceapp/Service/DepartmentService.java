@@ -1,21 +1,24 @@
 package io.zipcoder.persistenceapp.Service;
 
 import io.zipcoder.persistenceapp.Model.Department;
+import io.zipcoder.persistenceapp.Model.Employee;
 import io.zipcoder.persistenceapp.Repository.DepartmentRepository;
+import io.zipcoder.persistenceapp.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DepartmentService {
 
     private final DepartmentRepository repository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    DepartmentService(DepartmentRepository repository) {
+    DepartmentService(DepartmentRepository repository, EmployeeRepository employeeRepository) {
         this.repository = repository;
+        this.employeeRepository = employeeRepository;
     }
 
     public Department createDepartment(Department d) {
@@ -33,7 +36,7 @@ public class DepartmentService {
     public Department updateDepartment(Department d, Long id) {
         Department department = readOne(id);
         department.setDeptName(d.getDeptName());
-        department.setManager(d.getManager());
+        department.setManagerId(d.getManagerId());
 
         return repository.save(department);
     }
@@ -44,7 +47,14 @@ public class DepartmentService {
 
     public Department updateManager(Department d, Long id) {
         Department department = readOne(id);
-        department.setManager(d.getManager());
+        department.setManagerId(d.getManagerId());
+
+        for (Employee employee : employeeRepository.findAll()) {
+            if (employee.getDeptNum() == department.getId()) {
+                employee.setManagerId(department.getManagerId());
+                employeeRepository.save(employee);
+            }
+        }
         return repository.save(department);
     }
 

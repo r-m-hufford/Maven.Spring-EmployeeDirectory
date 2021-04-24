@@ -51,8 +51,8 @@ public class DepartmentController {
         return ResponseEntity.ok("Department #" + id + " has been removed");
     }
 
-    @PutMapping("/department/set_manager/{id}")
-    ResponseEntity<Department> setManager(@RequestBody Department d, @PathVariable Long id) {
+    @PutMapping("/department/updateManager/{id}")
+    ResponseEntity<Department> updateManager(@RequestBody Department d, @PathVariable Long id) {
         Department department = service.updateManager(d, id);
         return ResponseEntity.ok(department);
     }

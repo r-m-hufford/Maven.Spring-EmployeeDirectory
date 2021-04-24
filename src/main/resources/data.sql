@@ -7,5 +7,10 @@ VALUES ('Big', 'Bird', 'Bird', '111-555-2222', 'weirdBird@seasamail.com', '11/10
        ('Snuffle', 'Ufflegus', 'Kind Monster', '111-555-2227', 'gentleGiant@seasamail.com', '11/10/1969', 4, 2),
        ('Cookie', 'Monster', 'Kind Monster', '111-555-2228', 'cookies@seasamail.com', '11/10/1969', 2, 3),
        ('Kermit', 'DFrog', 'Frog', '111-555-2229', 'seeingGreen@seasamail.com', '11/10/1969', 7, 3),
-       ('Miss', 'Piggy', 'CEO', '111-555-2230', 'kermitsBae@seasamail.com', '11/10/1969', 7, 3),
+       ('Miss', 'Piggy', 'pig', '111-555-2230', 'kermitsBae@seasamail.com', '11/10/1969', 7, 3),
        ('Count', 'VonCount', 'Accountant', '111-555-2231', 'numberz@seasamail.com', '11/10/1969', 7, 3);
+
+INSERT INTO DEPARTMENT (DEPT_NAME, MANAGER_ID)
+VALUES ('Board of Directors', 1),
+       ('Marketing', 4),
+       ('Accounting', 7);

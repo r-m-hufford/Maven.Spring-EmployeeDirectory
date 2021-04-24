@@ -45,9 +45,9 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
-    @PutMapping("/employee/update_manager/{eid}/{mid}")
-    ResponseEntity<Employee> updateManger(@RequestBody Employee e, @PathVariable Long eid, @PathVariable Long mid) {
-        Employee employee = service.updateManager(e, eid, mid);
+    @PutMapping("/employee/update_manager/{id}")
+    ResponseEntity<Employee> updateManger(@RequestBody Employee e, @PathVariable Long id) {
+        Employee employee = service.updateManager(e, id);
         return ResponseEntity.ok(employee);
     }
 
@@ -73,7 +73,14 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee/findHierarchy/{id}")
-    ResponseEntity<List<Long>> findHierarchy(@PathVariable Long id) {
+    ResponseEntity<List<Employee>> findHierarchy(@PathVariable Long id) {
         return ResponseEntity.ok(service.findHierarchy(id));
     }
+
+    @GetMapping("/employee/downStream/{id}")
+    ResponseEntity<List<Employee>> findDownstream(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findDownstream(id));
+    }
+
+
 }

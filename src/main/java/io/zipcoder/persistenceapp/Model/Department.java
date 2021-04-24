@@ -1,9 +1,6 @@
 package io.zipcoder.persistenceapp.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -11,65 +8,53 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
-    private Long deptNum;
+    @Column(name = "DEPT_NAME")
     private String deptName;
-    private String manager;
+    @Column(name = "MANAGER_ID")
+    private Long managerId;
 
     public Department() {}
 
-    public Department(Long id, Long deptNum, String deptName, String manager) {
-        this.id = id;
-        this.deptNum = deptNum;
-        this.deptName = deptName;
-        this.manager = manager;
-    }
-
     public Long getId() { return id; }
-
-    public Long getDeptNum() {
-        return deptNum;
-    }
 
     public String getDeptName() {
         return deptName;
     }
 
-    public String getManager() {
-        return manager;
-    }
-
-    public void setDeptNum(Long deptNum) {
-        this.deptNum = deptNum;
+    public Long getManagerId() {
+        return managerId;
     }
 
     public void setDeptName(String deptName) {
         this.deptName = deptName;
     }
 
-    public void setManager(String manager) {
-        this.manager = manager;
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
     }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Department that = (Department) o;
-        return Objects.equals(deptNum, that.deptNum) && Objects.equals(deptName, that.deptName) && Objects.equals(manager, that.manager);
+        return Objects.equals(id, that.id) && Objects.equals(deptName, that.deptName) && Objects.equals(managerId, that.managerId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(deptNum, deptName, manager);
+        return Objects.hash(id, deptName, managerId);
     }
 
     @Override
     public String toString() {
         return "Department{" +
-                "deptNum=" + deptNum +
+                "id=" + id +
                 ", deptName='" + deptName + '\'' +
-                ", manager='" + manager + '\'' +
+                ", managerId=" + managerId +
                 '}';
     }
 }

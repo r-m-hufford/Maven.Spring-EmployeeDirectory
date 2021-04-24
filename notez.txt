@@ -1,0 +1,7 @@
+@JsonGetter
+
+marks a method as a protperty getter
+alternatively @JsonProperty
+
+@JsonGetter
+public List<item> getItems()
