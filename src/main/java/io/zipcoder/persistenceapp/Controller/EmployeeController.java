@@ -3,11 +3,13 @@ package io.zipcoder.persistenceapp.Controller;
 import io.zipcoder.persistenceapp.Model.Employee;
 import io.zipcoder.persistenceapp.Service.EmployeeService;
 import org.apache.coyote.Response;
+import org.hibernate.annotations.SortComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,10 +79,38 @@ public class EmployeeController {
         return ResponseEntity.ok(service.findHierarchy(id));
     }
 
-    @GetMapping("/employee/downStream/{id}")
+    @GetMapping("/employee/downstream/{id}")
     ResponseEntity<List<Employee>> findDownstream(@PathVariable Long id) {
         return ResponseEntity.ok(service.findDownstream(id));
     }
 
+    @DeleteMapping("/employee/removeEmployees")
+    public ResponseEntity<String> removeEmployees(List<Employee> employees) {
+        service.removeEmployees(employees);
+        return ResponseEntity.ok("Listed employees have been removed");
+    }
 
+    @DeleteMapping("/employee/removeByDepartment/{id}")
+    public ResponseEntity<String> removeByDepartment(@PathVariable Long id) {
+            service.removeByDepartment(id);
+            return ResponseEntity.ok("All employees in dept. " + id + " have been removed");
+        }
+
+    @DeleteMapping("/employee/deleteDownstream/{id}")
+    public ResponseEntity<String> removeDownstream(@PathVariable Long id) {
+        service.deleteDownstream(id);
+        return ResponseEntity.ok("All employees that report directly or indirectly to employee num. "
+                + id + " have been removed");
+    }
+
+    @PutMapping("/employee/replaceAndAbsorb/{id}")
+    public ResponseEntity<List<Employee>> replaceAndAbsorb(@PathVariable Long id) {
+        List<Employee> newTeam = service.removeAndAbsorb(id);
+        return ResponseEntity.ok(newTeam);
+    }
+
+    @GetMapping("/employee/details/{id}")
+    public ResponseEntity<String> employeeDetails(@PathVariable Long id) {
+        return ResponseEntity.ok(service.employeeDetails(id));
+    }
 }

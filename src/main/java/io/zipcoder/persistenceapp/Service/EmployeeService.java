@@ -125,7 +125,58 @@ public class EmployeeService {
         return downStream;
     }*/
 
+    public List<Employee> findDownstream(Long id) {
+        List<Employee> downstreamEmployees = new ArrayList<>();
+        Employee manager = repository.findOne(id);
+        boolean found = true;
+
+        while(found) {
+            for (Employee employee : repository.findAll()) {
+                if(employee.getManagerId() == manager.getId()) {
+                    downstreamEmployees.add(employee);
+                    found = true;
+                }
+            }
+        }
+        return downstreamEmployees;
+    }
 
 
+    public Boolean removeEmployees(List<Employee> employees) {
+        for (Employee employee : employees) {
+            repository.delete(repository.findOne(employee.getId()));
+        }
+        return true;
+    }
 
+    public Boolean removeByDepartment(Long id) {
+        for (Employee employee : repository.findAll()) {
+            if (employee.getDeptNum() == id) {
+                repository.delete(repository.findOne(employee.getId()));
+            }
+        }
+        return true;
+    }
+
+    public Boolean deleteDownstream(Long id) {
+        for (Employee employee : findDownstream(id)){
+            repository.delete(repository.findOne(employee.getId()));
+        }
+        return true;
+    }
+
+
+    public List<Employee> removeAndAbsorb(Long id) {
+        Long newManager = repository.findOne(id).getManagerId();
+
+        for (Employee employee : findByManager(id)) {
+            employee.setManagerId(newManager);
+            repository.save(employee);
+        }
+        return findByManager(newManager);
+    }
+
+    public String employeeDetails(Long id) {
+        return repository.findOne(id).toString();
+    }
 }
