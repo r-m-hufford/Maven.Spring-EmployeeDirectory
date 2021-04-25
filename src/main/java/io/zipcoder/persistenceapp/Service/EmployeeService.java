@@ -102,7 +102,7 @@ public class EmployeeService {
     }
 
     //   everyone/thing downstream
-    /*public List<Employee> findDownstream(@PathVariable Long id) {
+    public List<Employee> findDownstream(@PathVariable Long id) {
         List<Employee> downStream = new ArrayList<>();
         Employee manager = repository.findOne(id);
 
@@ -111,36 +111,16 @@ public class EmployeeService {
                 downStream.add(employee);
             }
         }
-        // int start = 0
-        // start = downstream.size - inside first loop
-        // i = start
-        //
-        for (int i = 0; i < downStream.size();i++) {
-            for (Employee employee : repository.findAll()) {
-                if (employee.getManagerId() == downStream.get(i).getId()) {
-                    downStream.add(employee);
-                }
+
+        List<Employee> subManagers = new ArrayList<>();
+        if (!downStream.isEmpty()) {
+            for (int i = 0; i < downStream.size(); i++) {
+                subManagers.addAll(findDownstream(downStream.get(i).getId()));
             }
+            downStream.addAll(subManagers);
         }
         return downStream;
-    }*/
-
-    public List<Employee> findDownstream(Long id) {
-        List<Employee> downstreamEmployees = new ArrayList<>();
-        Employee manager = repository.findOne(id);
-        boolean found = true;
-
-        while(found) {
-            for (Employee employee : repository.findAll()) {
-                if(employee.getManagerId() == manager.getId()) {
-                    downstreamEmployees.add(employee);
-                    found = true;
-                }
-            }
-        }
-        return downstreamEmployees;
     }
-
 
     public Boolean removeEmployees(List<Employee> employees) {
         for (Employee employee : employees) {

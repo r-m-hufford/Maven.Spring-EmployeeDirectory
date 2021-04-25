@@ -113,4 +113,9 @@ public class EmployeeController {
     public ResponseEntity<String> employeeDetails(@PathVariable Long id) {
         return ResponseEntity.ok(service.employeeDetails(id));
     }
+
+    @PutMapping("/employee/mergeDepartments/{aId}{bId}")
+    public ResponseEntity<List<Employee>> mergeDepartments(@PathVariable Long aId, @PathVariable Long bId) {
+        return null;
+    }
 }

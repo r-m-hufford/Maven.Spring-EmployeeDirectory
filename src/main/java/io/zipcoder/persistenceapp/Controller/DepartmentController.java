@@ -62,6 +62,4 @@ public class DepartmentController {
         Department department = service.updateDeptName(d, id);
         return ResponseEntity.ok(department);
     }
-
-
 }
